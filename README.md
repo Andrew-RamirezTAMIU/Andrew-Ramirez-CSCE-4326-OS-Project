@@ -4,4 +4,6 @@ Description: This project is for CSCE 4326 Operating Systems. The project revolv
 
 Members: Andrew Ramirez
 
-Instructions for Part 1: Download or copy the files found in the "Branch" section under "OS PROJ Part1" of the repository on an IDE such as VS Code. This program simulates the login process of an OS with a hard-coded login and password. Type in the correct username and password, "admin" and "password123," respectively. If the username and password were properly input, you will be displayed with a success or failure message.
+Instructions for Part 1:
+(1) Download or copy the files found in the "Branch" section under "OS PROJ Part1" and look for the main.cpp, auth.cpp, and auth.h of the repository on an IDE. 
+(2) This program simulates the login process of an OS with a hard-coded login and password. Type in the correct username and password, "admin" and "password123," respectively. (3) If the username and password were properly input, you will be displayed with a success or failure message.
