@@ -7,3 +7,9 @@ Members: Andrew Ramirez
 Instructions for Part 1:
 (1) Download or copy the files found in the "Branch" section under "OS PROJ Part1" and look for the main.cpp, auth.cpp, and auth.h of the repository on an IDE. 
 (2) This program simulates the login process of an OS with a hard-coded login and password. Type in the correct username and password, "admin" and "password123," respectively. (3) If the username and password were properly input, you will be displayed with a success or failure message.
+
+Instructions for Part 2:
+(1) Five processes will be created with different attributes.
+(2) Each process will have different states through NEW -> READY -> RUNNING -> TERMINATED.
+(3) Execution is simulated by decreasing the remaining time given to each process.
+(4) System outputs state changes and remaining time.
