@@ -1,85 +1,113 @@
-#include <iostream> //Input and Output library
-#include <string> //String Libary
-#include "auth.h" //Includes the authentecation function
+#include <iostream> // Input and Output library
+#include <string> // String Library
+#include <vector>
+#include "auth.h" // Includes the authentication function
 #include "Process.h"
+
 using namespace std;
 
-//Outputs message simulating an OS
+// Outputs message simulating an OS booting process
 void booting() {
-	cout << "Starting up...\n";
-	cout << endl;
+    cout << "Starting up...\n";
+    cout << endl;
 }
 
+// Function to print scheduling results
+void printResults(const vector<Process>& processes) {
+    cout << "\nProcess\tArrival\tBurst\tWaiting\tTurnaround\n";
+    for (const auto& process : processes) {
+        cout << process.getPID() << "\t"
+            << process.getArrivalTime() << "\t"
+            << process.getBurstTime() << "\t"
+            << process.getWaitingTime() << "\t"
+            << process.getTurnaroundTime() << "\n";
+    }
+}
 
 int main() {
-	booting();
-	//calls the authentecation function
-	if (authenticateUser()) {
-		cout << "\nAccess Granted. Welcome... \n";
-		cout << endl;
+    booting();
 
-		//calls the process function
-		cout << "Initializing process management...\n";
-		cout << endl;
+    // Calls the authentication function
+    if (authenticateUser()) {
+        cout << "\nAccess Granted. Welcome... \n";
+        cout << endl;
 
-		//creating 5 test cases
-		Process p1(1, 0, 10, 1, 100, false);
-		Process p2(2, 2, 5, 2, 50, true);
-		Process p3(3, 4, 8, 1, 75, false);
-		Process p4(4, 6, 12, 3, 120, true);
-		Process p5(5, 8, 7, 2, 60, false);
+        // Calls the process function
+        cout << "Initializing process management...\n";
+        cout << endl;
 
-		//initial states
-		cout << "Process " << p1.getPID() << " | State: NEW\n";
-		cout << "Process " << p2.getPID() << " | State: NEW\n";
-		cout << "Process " << p3.getPID() << " | State: NEW\n";
-		cout << "Process " << p4.getPID() << " | State: NEW\n";
-		cout << "Process " << p5.getPID() << " | State: NEW\n";
-		cout << endl;
+        // Creating 5 test cases
+        vector<Process> processes = {
+            Process(1, 0, 10, 1, 100, false),
+            Process(2, 2, 5, 2, 50, true),
+            Process(3, 4, 8, 1, 75, false),
+            Process(4, 6, 12, 3, 120, true),
+            Process(5, 8, 7, 2, 60, false)
+        };
 
-		//ready state
-		p1.updateState(READY);
-		p2.updateState(READY);
-		p3.updateState(READY);
-		p4.updateState(READY);
-		p5.updateState(READY);
+        // Initial process states
+        for (const auto& process : processes) {
+            cout << "Process " << process.getPID() << " | State: NEW\n";
+        }
+        cout << endl;
 
-		cout << "All processes are READY.\n";
+        // Move all processes to READY state
+        for (auto& process : processes) {
+            process.updateState(READY);
+        }
+        cout << "All processes are READY.\n";
 
-		//simulate execution
-		p1.execute(3);
-		p2.execute(2);
-		p3.execute(4);
-		p4.execute(5);
-		p5.execute(3);
+        // Simulate execution for some time
+        for (auto& process : processes) {
+            process.execute(3); // Simulate a portion of execution
+        }
 
-		cout << "Process " << p1.getPID() << " remaining time: " << p1.getRemainingTime() << "\n";
-		cout << "Process " << p2.getPID() << " remaining time: " << p2.getRemainingTime() << "\n";
-		cout << "Process " << p3.getPID() << " remaining time: " << p3.getRemainingTime() << "\n";
-		cout << "Process " << p4.getPID() << " remaining time: " << p4.getRemainingTime() << "\n";
-		cout << "Process " << p5.getPID() << " remaining time: " << p5.getRemainingTime() << "\n";
-		cout << endl;
+        // Display remaining execution time
+        for (const auto& process : processes) {
+            cout << "Process " << process.getPID() << " remaining time: " << process.getRemainingTime() << "\n";
+        }
+        cout << endl;
 
-		//finish execution
-		p1.execute(7);
-		p2.execute(3);
-		p3.execute(4);
-		p4.execute(7);
-		p5.execute(4);
+        // Finish execution
+        for (auto& process : processes) {
+            process.execute(10); // Simulate remaining execution
+        }
 
-		//end states
-		cout << "Process " << p1.getPID() << " | State: TERMINATED\n";
-		cout << "Process " << p2.getPID() << " | State: TERMINATED\n";
-		cout << "Process " << p3.getPID() << " | State: TERMINATED\n";
-		cout << "Process " << p4.getPID() << " | State: TERMINATED\n";
-		cout << "Process " << p5.getPID() << " | State: TERMINATED\n";
-		cout << endl;
+        // End states
+        for (const auto& process : processes) {
+            cout << "Process " << process.getPID() << " | State: TERMINATED\n";
+        }
+        cout << endl;
 
-	}
+        // **Scheduling Algorithms Execution**
+        cout << "\n---- FCFS Scheduling ----\n";
+        Process::FCFS_Scheduling(processes);
+        printResults(processes);
 
-	else {
-		cout << "\nAccess Denied. This account may not be logged on to. Exiting... \n";
-	}
+        // Reset process states for the next scheduling test
+        for (auto& process : processes) {
+            process.setWaitingTime(0);
+            process.setTurnaroundTime(0);
+        }
 
-	return 0; //Exits
+        cout << "\n---- SJF Non-Preemptive Scheduling ----\n";
+        Process::SJF_Nonpreemptive(processes);
+        printResults(processes);
+
+        // Reset process states again for the next test
+        for (auto& process : processes) {
+            process.setWaitingTime(0);
+            process.setTurnaroundTime(0);
+        }
+
+        cout << "\n---- SJF Preemptive Scheduling ----\n";
+        Process::SJF_PREEMPTIVE(processes);
+        printResults(processes);
+
+    }
+    else {
+        cout << "\nAccess Denied. This account may not be logged on to. Exiting... \n";
+    }
+
+    return 0; // Exits
 }
