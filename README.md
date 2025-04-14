@@ -13,3 +13,6 @@ Instructions for Part 2:
 (2) Each process will have different states through NEW -> READY -> RUNNING -> TERMINATED.
 (3) Execution is simulated by decreasing the remaining time given to each process.
 (4) System outputs state changes and remaining time.
+
+Instructions for Part 3:
+
