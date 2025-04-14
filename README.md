@@ -15,4 +15,13 @@ Instructions for Part 2:
 (4) System outputs state changes and remaining time.
 
 Instructions for Part 3:
+(1) Processes now have CPU scheduling
+(2) FCFS is sorted by arrival time
+(3) SJF Non-preemptive is sorted by arrival time, then by burst time
+(4) SJF Preemptive (Shortest Remaining Time First) executes the processes with the shortest arrival for one quantum, then by burst time
+
+
+Instructions for Part 4:
+(1) Virtual memory for each processes was created
+
 
